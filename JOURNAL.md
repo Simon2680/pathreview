@@ -22,3 +22,17 @@ The `ResumeParser` class in `ingestion/parsers/resume_parser.py` fails to detect
 2. **Reproduction**: The repository includes failing unit tests (`test_parse_single_column_resume_text`, `test_parse_resume_no_work_experience`, `test_detect_sections`) which fail consistently and provide a clear, local feedback loop.
 3. **No External Dependencies**: The bug can be fixed and verified completely offline without needing active GitHub tokens or LLM APIs.
 4. **Scope Fit**: As a Tier 1 issue, it represents a well-defined task (updating regular expressions and markdown cleanup logic) that matches the scope of a starter contribution.
+
+## Week 8 — Reproduction & solution planning
+
+**Reproduction commit link:** https://github.com/Simon2680/pathreview/commit/24e5bab59fbd76dcd22ba67adbdf67fcc393f952
+
+**Reproduction summary:**
+I reproduced the issue locally by running pytest on `tests/unit/test_resume_parser.py` and creating a reproduction test `test_reproduce_issue_147_leading_whitespace` with space and tab indented section headers. I observed that `ResumeParser._detect_sections()` returned an empty list `[]` because its regex patterns (`^Header`, `\nHeader`) fail to match lines with leading whitespace.
+
+**PLAN.md link:** https://github.com/Simon2680/pathreview/blob/fix/147-resume-section-whitespace/PLAN.md
+
+**Walkthrough video (recommended):** N/A
+
+**Blockers or open questions:**
+None. The root cause in `ingestion/parsers/resume_parser.py` is fully understood and verified through failing test assertions.
