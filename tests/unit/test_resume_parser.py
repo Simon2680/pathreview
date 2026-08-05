@@ -204,3 +204,31 @@ class TestResumeParser:
         ), "Failed to detect Experience section with leading spaces"
         assert "education" in sections_lower, "Failed to detect Education section with leading tab"
         assert "skills" in sections_lower, "Failed to detect Skills section with leading tab/spaces"
+
+    def test_detect_multi_word_sections_with_whitespace(self, parser: ResumeParser) -> None:
+        """Test section detection for multi-word headers with leading spaces and tabs."""
+        text = """
+            Work Experience:
+            - Lead Architect at Acme Corp
+
+            \tTechnical Skills:
+            - Python, Rust, Go
+        """
+        sections = parser._detect_sections(text)
+        sections_lower = [s.lower() for s in sections]
+
+        assert "work experience" in sections_lower
+        assert "technical skills" in sections_lower
+
+    def test_strip_markdown_indented_headers(self, parser: ResumeParser) -> None:
+        """Test markdown header stripping when headers are indented with whitespace."""
+        markdown_text = """
+            # Indented Title
+            \t## Indented Section
+            Content text line
+        """
+        stripped = parser._strip_markdown(markdown_text)
+
+        assert "#" not in stripped
+        assert "Indented Title" in stripped
+        assert "Indented Section" in stripped
