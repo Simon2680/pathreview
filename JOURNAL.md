@@ -51,7 +51,7 @@ Run linter, formatter, type checker, push the updated branch to GitHub, open the
 
 ### Check-in 2 (end of week)
 
-**PR link:** https://github.com/ascherj/pathreview/pull/890
+**PR link:** https://github.com/ascherj/pathreview/pull/892
 
 **Branch:** `fix/147-resume-section-whitespace`
 
