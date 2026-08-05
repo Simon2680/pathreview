@@ -36,3 +36,32 @@ I reproduced the issue locally by running pytest on `tests/unit/test_resume_pars
 
 **Blockers or open questions:**
 None. The root cause in `ingestion/parsers/resume_parser.py` is fully understood and verified through failing test assertions.
+
+## Week 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+
+**Current progress:**
+Implemented section header detection and markdown header stripping fixes in `ResumeParser` (`ingestion/parsers/resume_parser.py`) to support optional leading horizontal whitespace (spaces and tabs). Verified reproduction test passes and added unit tests in `tests/unit/test_resume_parser.py`.
+
+**Next steps:**
+Run linter, formatter, type checker, push the updated branch to GitHub, open the pull request against `ascherj/pathreview`, and complete Check-in 2.
+
+---
+
+### Check-in 2 (end of week)
+
+**PR link:** https://github.com/ascherj/pathreview/pull/890
+
+**Branch:** `fix/147-resume-section-whitespace`
+
+**What you built:**
+Fixed resume section header detection in `ResumeParser._detect_sections()` by updating regular expressions to match headers preceded by leading spaces and tabs (`[ \t]*`). Also updated `ResumeParser._strip_markdown()` to strip markdown headers (`#`) when preceded by leading whitespace.
+
+**Tests added or updated:**
+Updated `tests/unit/test_resume_parser.py` by resolving `test_reproduce_issue_147_leading_whitespace` and added `test_detect_multi_word_sections_with_whitespace` and `test_strip_markdown_indented_headers` covering multi-word headers, tabs, and indented markdown titles.
+
+**Self-review confirmation:** [x] make check passes  [x] make test-unit passes
+
+**Draft PR feedback received from:** none
+
