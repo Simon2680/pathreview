@@ -65,3 +65,37 @@ Updated `tests/unit/test_resume_parser.py` by resolving `test_reproduce_issue_14
 
 **Draft PR feedback received from:** none
 
+---
+
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [ ] Yes  [x] No — still awaiting review
+
+**Summary of feedback:**
+No reviewer feedback was received this week (Summer 2026 cohort note: maintainer feedback is not active for Su26).
+
+**How you responded:**
+N/A — no feedback received.
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+Understanding how subtle edge cases in string parsing and regex line anchors (`^` vs. `\n`) interact across different text extraction formats (e.g., PDFs parsed into plaintext with margin indentation or tabbed lists) was trickier than expected. At first glance, modifying a regex to support whitespace seemed trivial, but avoiding false positives on inline body text or multi-word section headers while maintaining clean string splitting required careful testing of regex boundaries and markdown stripping logic in `_strip_markdown()`.
+
+**What did you learn about working in a large codebase?**
+Contributing to a shared production codebase requires a much higher standard of isolation, regression testing, and strict adherence to repository developer tools (`make check`, ruff, mypy, pytest) compared to personal projects. In a solo project, you can easily alter function signatures or assumptions; in a shared codebase, you must respect established internal abstractions (like `ResumeParser`) to ensure your fix resolves the bug cleanly without breaking upstream ingestion pipelines or downstream consumers.
+
+**How did AI tools help — and where did they fall short?**
+AI tools were exceptionally useful for rapidly brainstorming regex edge cases, refining unit test assertions for varied whitespace combinations, and formatting clear documentation. However, AI fell short when navigating local environment nuances—such as recognizing which unit tests depended on offline parser logic versus external LLM APIs—and verifying that regex boundary changes wouldn't introduce subtle false positives elsewhere in section extraction.
+
+**What would you do differently if you started over?**
+If starting over, I would build an even more comprehensive suite of failing reproduction tests representing edge-case document layouts (e.g., mixed spaces/tabs, multi-line headings, non-standard section headers) before touching any implementation code. Having that exhaustive test harness up front would have made validating the regex refinements in `_detect_sections()` and `_strip_markdown()` even smoother.
+
+**What are you most proud of from this module?**
+I am most proud of delivering a clean, surgical fix that completely resolved Issue #147 without introducing code bloat or side effects, while expanding unit test coverage to protect against regression and maintaining full compliance with the repository's automated quality checks (`make check`).
+
+
